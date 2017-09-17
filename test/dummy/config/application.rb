@@ -3,7 +3,7 @@ require_relative 'boot'
 require 'rails/all'
 
 Bundler.require(*Rails.groups)
-require "red/arrow/activerecord"
+require "arrow_activerecord"
 
 module Dummy
   class Application < Rails::Application

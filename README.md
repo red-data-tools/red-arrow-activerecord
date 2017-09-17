@@ -1,14 +1,19 @@
-# Red::Arrow::Activerecord
-Short description and motivation.
+# README
+
+## Name
+Red ActiveRecord
 
 ## Usage
-How to use my plugin.
+
+```rb
+User.all.select(:id, :name).to_arrow
+```
 
 ## Installation
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'red-arrow-activerecord'
+gem 'red-arrow-activerecord', require: 'arrow-activerecord' 
 ```
 
 And then execute:
