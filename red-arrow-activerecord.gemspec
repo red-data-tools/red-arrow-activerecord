@@ -19,6 +19,8 @@ Gem::Specification.new do |s|
   s.add_dependency "activerecord"
   s.add_dependency "red-arrow"
 
+  s.add_development_dependency("bundler")
+  s.add_development_dependency("rake")
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "test-unit"
 end
