@@ -3,22 +3,23 @@ require 'arrow'
 module ArrowActiveRecord
   module Arrowable
     def to_arrow
-      target_column_names = self.select_values.size.zero? ? self.column_names : self.select_values
+      target_column_names = select_values
+      target_column_names = column_names if select_values.empty?
       arrays = generate_arrow_arrays(target_column_names)
       fields = target_column_names.collect.with_index do |name, i|
         Arrow::Field.new(name, arrays[i].value_data_type)
       end
       schema = Arrow::Schema.new(fields)
 
-      Arrow::RecordBatch.new(schema, self.size, arrays)
+      Arrow::RecordBatch.new(schema, size, arrays)
     end
 
     private
     def generate_arrow_arrays(target_column_names)
-      column_records = self.pluck(*target_column_names).transpose
+      column_records = pluck(*target_column_names).transpose
 
       target_column_names.map.with_index do |column_name, idx|
-        type = self.columns.find { |e| e.name == column_name.to_s }.type
+        type = columns.find { |e| e.name == column_name.to_s }.type
         case type
         when :integer
           builder = Arrow::IntArrayBuilder.new
