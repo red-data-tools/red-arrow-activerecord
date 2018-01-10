@@ -19,7 +19,7 @@ module ArrowActiveRecord
       column_records = pluck(*target_column_names).transpose
 
       target_column_names.map.with_index do |column_name, idx|
-        type = columns.find { |e| e.name == column_name.to_s }.type
+        type = columns.find { |column| column.name == column_name.to_s }.type
         case type
         when :integer
           builder = Arrow::IntArrayBuilder.new
