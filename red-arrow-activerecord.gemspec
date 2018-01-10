@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.name        = "red-arrow-activerecord"
   s.version     = ArrowActiverecord::VERSION
   s.authors     = ["hatappi", "Kouhei Sutou"]
-  s.email       = ["hatappi@hatappi.me", "kou@clear-code.com")]
+  s.email       = ["hatappi@hatappi.me", "kou@clear-code.com"]
   s.homepage    = "https://github.com/red-data-tools/red-arrow-activerecord"
   s.summary     = "A library that provides conversion method between Apache Arrow and ActiveRecord"
   s.description = "A library that provides conversion method between Apache Arrow and ActiveRecord"
