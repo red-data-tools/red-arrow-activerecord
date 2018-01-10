@@ -13,7 +13,7 @@ User.all.select(:id, :name).to_arrow
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'red-arrow-activerecord', require: 'arrow-activerecord' 
+gem 'red-arrow-activerecord', require: 'arrow-activerecord'
 ```
 
 And then execute:
