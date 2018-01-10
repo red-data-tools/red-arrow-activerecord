@@ -25,6 +25,8 @@ module ArrowActiveRecord
           builder.build(column_records[idx])
         when :float
           Arrow::FloatArray.new(column_records[idx])
+        when :date
+          Arrow::Date32Array.new(column_records[idx])
         when :datetime
           data_type = Arrow::TimestampDataType.new(:nano)
           builder = Arrow::TimestampArrayBuilder.new(data_type)
