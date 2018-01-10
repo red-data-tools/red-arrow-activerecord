@@ -17,9 +17,11 @@ class ArrowableTest < Test::Unit::TestCase
       ActiveRecord::Base.connection.create_table(:data) do |table|
         table.string :string_column
         table.datetime :datetime_column
+        table.boolean :boolean_column
       end
       Data.create(:string_column => "Hello",
-                  :datetime_column => @datetime_value)
+                  :datetime_column => @datetime_value,
+                  :boolean_column => false)
     end
 
     test "all" do
@@ -27,6 +29,7 @@ class ArrowableTest < Test::Unit::TestCase
 id: [1]
 string_column: ["Hello"]
 datetime_column: [#{@datetime_value.to_i * 1_000_000_000 + @datetime_value.nsec}]
+boolean_column: [false]
       RECORD_BATCH
     end
   end

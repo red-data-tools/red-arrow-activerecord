@@ -29,6 +29,8 @@ module ArrowActiveRecord
           data_type = Arrow::TimestampDataType.new(:nano)
           builder = Arrow::TimestampArrayBuilder.new(data_type)
           builder.build(column_records[idx])
+        when :boolean
+          Arrow::BooleanArray.new(column_records[idx])
         else
           Arrow::StringArray.new(column_records[idx])
         end
