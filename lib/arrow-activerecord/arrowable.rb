@@ -4,7 +4,7 @@ module ArrowActiveRecord
   module Arrowable
     def to_arrow
       target_column_names = self.select_values.size.zero? ? self.column_names : self.select_values
-      arrays = generate_columns(target_column_names)
+      arrays = generate_arrow_arrays(target_column_names)
       fields = target_column_names.collect.with_index do |name, i|
         Arrow::Field.new(name, arrays[i].value_data_type)
       end
@@ -14,7 +14,7 @@ module ArrowActiveRecord
     end
 
     private
-    def generate_columns(target_column_names)
+    def generate_arrow_arrays(target_column_names)
       column_records = self.pluck(*target_column_names).transpose
 
       target_column_names.map.with_index do |column_name, idx|
