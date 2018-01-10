@@ -3,9 +3,9 @@ require 'arrow'
 module ArrowActiveRecord
   module Arrowable
     def to_arrow
-      @target_column_names = self.select_values.size.zero? ? self.column_names : self.select_values
-      arrays = generate_columns
-      fields = @target_column_names.collect.with_index do |name, i|
+      target_column_names = self.select_values.size.zero? ? self.column_names : self.select_values
+      arrays = generate_columns(target_column_names)
+      fields = target_column_names.collect.with_index do |name, i|
         Arrow::Field.new(name, arrays[i].value_data_type)
       end
       schema = Arrow::Schema.new(fields)
@@ -14,10 +14,10 @@ module ArrowActiveRecord
     end
 
     private
-    def generate_columns
-      column_records = self.pluck(*@target_column_names).transpose
+    def generate_columns(target_column_names)
+      column_records = self.pluck(*target_column_names).transpose
 
-      @target_column_names.map.with_index do |column_name, idx|
+      target_column_names.map.with_index do |column_name, idx|
         type = self.columns.find { |e| e.name == column_name.to_s }.type
         case type
         when :integer
