@@ -1,5 +1,4 @@
-require "arrow-activerecord/active_record_ext"
+require "active_record"
+require "arrow-activerecord/arrowable"
 
-ActiveSupport.on_load :active_record do
-  ActiveRecord::Relation.send :include, ArrowActiveRecord::ActiveRecordExt
-end
+ActiveRecord::Relation.send :include, ArrowActiveRecord::Arrowable
