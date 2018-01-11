@@ -28,7 +28,7 @@ class ArrowableTest < Test::Unit::TestCase
     end
 
     test "all" do
-      assert_equal(<<-RECORD_BATCH, Data.all.to_arrow.to_s)
+      assert_equal(<<-RECORD_BATCH, Data.all.to_arrow.each_record_batch.first.to_s)
 id: [1]
 string_column: ["Hello"]
 date_column: [#{(@date_value - Date.new(1970, 1, 1)).to_i}]
