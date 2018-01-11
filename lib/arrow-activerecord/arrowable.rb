@@ -40,7 +40,13 @@ module ArrowActiveRecord
     private
     def extract_arrow_data_type(column)
       type = nil
-      type = column.type if column
+      if column
+        if column.bigint?
+          type = :bigint
+        else
+          type = column.type
+        end
+      end
       case type
       when :bigint
         Arrow::Int64DataType.new
