@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.description = "A library that provides conversion method between Apache Arrow and ActiveRecord"
   s.license     = "MIT"
 
-  s.files = Dir["lib/**/*", "LICENSE", "Rakefile", "README.md"]
+  s.files = Dir["{lib,doc}/**/*", "LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "activerecord"
   s.add_dependency "red-arrow"
