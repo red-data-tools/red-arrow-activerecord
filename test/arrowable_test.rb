@@ -32,12 +32,24 @@ class ArrowableTest < Test::Unit::TestCase
 
     test "all" do
       assert_equal(<<-RECORD_BATCH, Data.all.to_arrow.each_record_batch.first.to_s)
-id: [1]
-string_column: ["Hello"]
-date_column: [#{(@date_value - Date.new(1970, 1, 1)).to_i}]
-datetime_column: [#{@datetime_value.to_i * 1_000_000_000 + @datetime_value.nsec}]
-boolean_column: [false]
-bigint_column: [#{@bigint_value}]
+id:   [
+    1
+  ]
+string_column:   [
+    "Hello"
+  ]
+date_column:   [
+    #{(@date_value - Date.new(1970, 1, 1)).to_i}
+  ]
+datetime_column:   [
+    #{@datetime_value.to_i * 1_000_000_000 + @datetime_value.nsec}
+  ]
+boolean_column:   [
+    false
+  ]
+bigint_column:   [
+    #{@bigint_value}
+  ]
       RECORD_BATCH
     end
   end
