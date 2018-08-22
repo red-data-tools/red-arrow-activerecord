@@ -68,8 +68,6 @@ module ArrowActiveRecord
         Arrow::StringDataType.new
       when :time, :timestamp
         Arrow::TimestampDataType.new(:nano)
-      when :timestamp
-        Arrow::TimestampDataType.new(:nano)
       else
         message = "unsupported data type: #{type}: #{column.inspect}"
         raise NotImplementedError, message
