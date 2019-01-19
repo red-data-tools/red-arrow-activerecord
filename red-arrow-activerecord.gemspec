@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{lib,doc}/**/*", "LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "activerecord"
-  s.add_dependency "red-arrow"
+  s.add_dependency "red-arrow", ">= 0.12.0"
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "rake"

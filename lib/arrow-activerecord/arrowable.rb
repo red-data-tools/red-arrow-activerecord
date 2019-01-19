@@ -7,34 +7,23 @@ module ArrowActiveRecord
       target_column_names = column_names if select_values.empty?
 
       fields = []
-      data_types = []
       target_column_names.each do |name|
         name = name.to_s
         target_column = columns.find do |column|
           column.name == name
         end
-        arrow_data_type = extract_arrow_data_type(target_column)
-        fields << Arrow::Field.new(name, arrow_data_type)
-        data_types << arrow_data_type
+        fields << {name: name, data_type: extract_arrow_data_type(target_column)}
       end
       schema = Arrow::Schema.new(fields)
 
-      arrow_array_batches = data_types.collect do
-        []
-      end
+      record_batches = []
+      record_batch_builder = Arrow::RecordBatchBuilder.new(schema)
       in_batches(of: batch_size).each do |relation|
-        column_values_set = relation.pluck(*target_column_names).transpose
-        data_types.each_with_index do |data_type, i|
-          column_values = column_values_set[i]
-          arrow_array_batches[i] << build_arrow_array(column_values, data_type)
-        end
+        records = relation.pluck(*target_column_names)
+        record_batch_builder.append(records)
+        record_batches << record_batch_builder.flush
       end
-      columns = fields.collect.with_index do |field, i|
-        chunked_array = Arrow::ChunkedArray.new(arrow_array_batches[i])
-        Arrow::Column.new(field, chunked_array)
-      end
-
-      Arrow::Table.new(schema, columns)
+      Arrow::Table.new(schema, record_batches)
     end
 
     private
@@ -49,52 +38,28 @@ module ArrowActiveRecord
       end
       case type
       when :bigint
-        Arrow::Int64DataType.new
+        :int64
       when :binary
-        Arrow::BinaryDataType.new
+        :binary
       when :boolean
-        Arrow::BooleanDataType.new
+        :boolean
       when :date
-        Arrow::Date32DataType.new
+        :date32
       when :datetime
-        Arrow::TimestampDataType.new(:nano)
-      # when :decimal
+        [:timestamp, :nano]
+      when :decimal
+        [:decimal128, type.precision, type.scale]
       when :float
-        Arrow::FloatDataType.new
+        :float
       when :integer
-        Arrow::Int32DataType.new
+        :int32
       # when :json
       when :string, :text
-        Arrow::StringDataType.new
+        :string
       when :time, :timestamp
-        Arrow::TimestampDataType.new(:nano)
+        [:timestamp, :nano]
       else
         message = "unsupported data type: #{type}: #{column.inspect}"
-        raise NotImplementedError, message
-      end
-    end
-
-    def build_arrow_array(column_values, data_type)
-      case data_type
-      when Arrow::Int64DataType
-        Arrow::Int64Array.new(column_values)
-      when Arrow::BinaryDataType
-        Arrow::BinaryArray.new(column_values)
-      when Arrow::BooleanDataType
-        Arrow::BooleanArray.new(column_values)
-      when Arrow::Date32DataType
-        Arrow::Date32Array.new(column_values)
-      when Arrow::TimestampDataType
-        builder = Arrow::TimestampArrayBuilder.new(data_type)
-        builder.build(column_values)
-      when Arrow::FloatDataType
-        Arrow::FloatArray.new(column_values)
-      when Arrow::Int32DataType
-        Arrow::Int32Array.new(column_values)
-      when Arrow::StringDataType
-        Arrow::StringArray.new(column_values)
-      else
-        message = "unsupported data type: #{data_type.inspect}"
         raise NotImplementedError, message
       end
     end
