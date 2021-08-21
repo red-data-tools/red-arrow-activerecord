@@ -1,7 +1,8 @@
 # README
 
 ## Name
-Red ActiveRecord
+
+Red Arrow ActiveRecord
 
 ## Usage
 
