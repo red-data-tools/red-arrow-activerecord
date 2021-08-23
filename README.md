@@ -2,7 +2,7 @@
 
 ## Name
 
-Red Arrow ActiveRecord
+Red Arrow Active Record
 
 ## Usage
 
