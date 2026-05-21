@@ -1,5 +1,11 @@
 # News
 
+## 0.1.3 - 2026-05-22
+
+### Improvements
+
+  * Added `#each_record_batch`.
+
 ## 0.1.2 - 2026-05-22
 
 ### Improvements
