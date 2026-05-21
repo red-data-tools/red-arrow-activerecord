@@ -12,7 +12,7 @@ helper.install
 
 desc "Run tests"
 task :test do
-  ruby("test/run-test.rb")
+  ruby("test/run.rb")
 end
 
 task default: :test
