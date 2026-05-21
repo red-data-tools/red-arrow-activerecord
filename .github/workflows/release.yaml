@@ -19,7 +19,7 @@ jobs:
                 puts(ARGF.read.split(/^## /)[1]. \
                        gsub(/ {.+?}/, ""). \
                        gsub(/\[(.+?)\]\[.+?\]/) {$1})' \
-            NEWS.md > release-note.md
+            doc/text/news.md > release-note.md
       - name: Upload to release
         env:
           GH_TOKEN: ${{ github.token }}

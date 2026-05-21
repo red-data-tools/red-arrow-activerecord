@@ -1,5 +1,11 @@
 # News
 
+## 0.1.2 - 2026-05-22
+
+### Improvements
+
+  * Added support for one column case.
+
 ## 0.1.1 - 2019-02-02
 
 ### Improvements
