@@ -1,4 +1,6 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
+
+plugin "rubygems-requirements-system"
 
 # Declare your gem's dependencies in arrow_activerecord.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
