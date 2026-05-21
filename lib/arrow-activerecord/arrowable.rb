@@ -21,6 +21,8 @@ module ArrowActiveRecord
       in_batches(of: batch_size).each do |relation|
         records = relation.pluck(*target_column_names)
         if target_column_names.size == 1
+          # [1, 2, 3] ->
+          # [[1], [2], [3]]
           record_batch_builder.append(records.collect {|value| [value]})
         else
           record_batch_builder.append(records)
