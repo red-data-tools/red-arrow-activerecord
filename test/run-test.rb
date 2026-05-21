@@ -2,6 +2,7 @@
 
 $VERBOSE = true
 
+require "fileutils"
 require "pathname"
 
 base_dir = Pathname.new(__FILE__).dirname.parent.expand_path

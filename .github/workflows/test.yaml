@@ -1,0 +1,42 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - '**'
+      - '!dependabot/**'
+      - '!copilot/**'
+    tags:
+      - '**'
+  pull_request:
+
+jobs:
+  test:
+    name: "Ruby ${{ matrix.ruby-version }}: ${{ matrix.runs-on }}"
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby-version:
+          - "3.2"
+          - "3.3"
+          - "3.4"
+          - "4.0"
+        runs-on:
+          # - macos-latest
+          - ubuntu-latest
+          # - windows-latest
+    runs-on: ${{ matrix.runs-on }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+        # We can't use "bundler-cache: true" with ruby/setup-ruby
+        # because it doesn't cache dependencies installed by
+        # rubygems-requirements-system automatically.
+      - name: Install dependencies
+        run: |
+          MAKEFLAGS="-j$(nproc)" bundle install --jobs=$(nproc)
+      - name: Test
+        run: |
+          bundle exec rake
