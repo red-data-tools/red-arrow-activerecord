@@ -39,10 +39,10 @@ string_column:   [
     "Hello"
   ]
 date_column:   [
-    #{(@date_value - Date.new(1970, 1, 1)).to_i}
+    #{@date_value}
   ]
 datetime_column:   [
-    #{@datetime_value.to_i * 1_000_000_000 + @datetime_value.nsec}
+    #{@datetime_value.strftime("%Y-%m-%d %H:%M:%S.%9N")}
   ]
 boolean_column:   [
     false
