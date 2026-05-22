@@ -1,5 +1,11 @@
 # News
 
+## 0.1.4 - 2026-05-22
+
+### Improvements
+
+  * SQLite: Changed to use 64 bit integer for `INTEGER`.
+
 ## 0.1.3 - 2026-05-22
 
 ### Improvements
