@@ -49,6 +49,9 @@ module ArrowActiveRecord
           type = :bigint
         else
           type = column.type
+          if type == :integer and model.adapter_class::ADAPTER_NAME == "SQLite"
+            type = :bigint
+          end
         end
       end
       case type

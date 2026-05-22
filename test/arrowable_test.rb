@@ -43,8 +43,8 @@ class ArrowableTest < Test::Unit::TestCase
     test "one column" do
       table = Data.all.select(:id).to_arrow(batch_size: 1)
       assert_equal([
-                     Arrow::RecordBatch.new(id: Arrow::Int32Array.new([1])),
-                     Arrow::RecordBatch.new(id: Arrow::Int32Array.new([2])),
+                     Arrow::RecordBatch.new(id: Arrow::Int64Array.new([1])),
+                     Arrow::RecordBatch.new(id: Arrow::Int64Array.new([2])),
                    ],
                    table.each_record_batch.to_a)
     end
@@ -53,7 +53,7 @@ class ArrowableTest < Test::Unit::TestCase
       table = Data.all.to_arrow(batch_size: 1)
       assert_equal([
                      Arrow::RecordBatch.new(
-                       id: Arrow::Int32Array.new([1]),
+                       id: Arrow::Int64Array.new([1]),
                        string_column: Arrow::StringArray.new(["Hello"]),
                        date_column: Arrow::Date32Array.new([@date_value]),
                        datetime_column: Arrow::TimestampArray.new(
@@ -65,7 +65,7 @@ class ArrowableTest < Test::Unit::TestCase
                          Arrow::Int64Array.new([@max_bigint_value]),
                      ),
                      Arrow::RecordBatch.new(
-                       id: Arrow::Int32Array.new([2]),
+                       id: Arrow::Int64Array.new([2]),
                        string_column: Arrow::StringArray.new(["Hello2"]),
                        date_column: Arrow::Date32Array.new([@date_value + 1]),
                        datetime_column: Arrow::TimestampArray.new(
@@ -86,8 +86,8 @@ class ArrowableTest < Test::Unit::TestCase
       record_batches =
         Data.all.select(:id).each_record_batch(batch_size: 1).to_a
       assert_equal([
-                     Arrow::RecordBatch.new(id: Arrow::Int32Array.new([1])),
-                     Arrow::RecordBatch.new(id: Arrow::Int32Array.new([2])),
+                     Arrow::RecordBatch.new(id: Arrow::Int64Array.new([1])),
+                     Arrow::RecordBatch.new(id: Arrow::Int64Array.new([2])),
                    ],
                    record_batches)
     end
@@ -96,7 +96,7 @@ class ArrowableTest < Test::Unit::TestCase
       record_batches = Data.all.each_record_batch(batch_size: 1).to_a
       assert_equal([
                      Arrow::RecordBatch.new(
-                       id: Arrow::Int32Array.new([1]),
+                       id: Arrow::Int64Array.new([1]),
                        string_column: Arrow::StringArray.new(["Hello"]),
                        date_column: Arrow::Date32Array.new([@date_value]),
                        datetime_column: Arrow::TimestampArray.new(
@@ -108,7 +108,7 @@ class ArrowableTest < Test::Unit::TestCase
                          Arrow::Int64Array.new([@max_bigint_value]),
                      ),
                      Arrow::RecordBatch.new(
-                       id: Arrow::Int32Array.new([2]),
+                       id: Arrow::Int64Array.new([2]),
                        string_column: Arrow::StringArray.new(["Hello2"]),
                        date_column: Arrow::Date32Array.new([@date_value + 1]),
                        datetime_column: Arrow::TimestampArray.new(
